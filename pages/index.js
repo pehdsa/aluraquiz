@@ -1,10 +1,14 @@
+import React from 'react';
 import styled from 'styled-components'
+
 import db from '../db.json';
-import Widget from '../components/Widget'
-import QuizLogo from '../components/QuizLogo'
-import QuizBackground from '../components/QuizBackground'
-import Footer from '../components/Footer'
-import GitHubCorner from '../components/GitHubCorner'
+import Widget from '../components/Widget';
+import QuizLogo from '../components/QuizLogo';
+import QuizBackground from '../components/QuizBackground';
+import Footer from '../components/Footer';
+import GitHubCorner from '../components/GitHubCorner';
+
+import Header from '../components/Header';
 
 export const QuizContainer = styled.div`
     width: 100%;
@@ -20,35 +24,41 @@ export const QuizContainer = styled.div`
 export default function Home() {
     return (
         
-        <QuizBackground backgroundImage={db.bg}>
+        <React.Fragment>
             
-            <QuizContainer>
+            <Header />
+            
+            <QuizBackground backgroundImage={db.bg}>
                 
-                <QuizLogo />
-                
-                <Widget>
-                    <Widget.Header>
-                        <h1>{db.title}</h1>
-                    </Widget.Header>
-                    <Widget.Content>
-                        <p>{db.description}</p>
-                    </Widget.Content>
-                </Widget>
+                <QuizContainer>
+                    
+                    <QuizLogo />
+                    
+                    <Widget>
+                        <Widget.Header>
+                            <h1>{db.title}</h1>
+                        </Widget.Header>
+                        <Widget.Content>
+                            <p>{db.description}</p>
+                        </Widget.Content>
+                    </Widget>
 
-                <Widget>
-                    <Widget.Content>
-                        <h1>Quizes da Galera</h1>
-                        <p>lorem ipsum dolor sit amet...</p>
-                    </Widget.Content>
-                </Widget>
+                    <Widget>
+                        <Widget.Content>
+                            <h1>Quizes da Galera</h1>
+                            <p>lorem ipsum dolor sit amet...</p>
+                        </Widget.Content>
+                    </Widget>
 
-                <Footer />
+                    <Footer />
 
-            </QuizContainer>
+                </QuizContainer>
 
-            <GitHubCorner projectUrl="https://github.com/omariosouto" />
+                <GitHubCorner projectUrl="https://github.com/omariosouto" />
 
-        </QuizBackground>
+            </QuizBackground>
+
+        </React.Fragment>
 
     );
 }
