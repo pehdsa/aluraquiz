@@ -15,6 +15,7 @@ import Button from '../components/Button';
 function QuestionWidget({ questionIndex, totalQuestions, question }) {
     return (
         <Widget>
+            
             <Widget.Header>
                 <h1>{ `Pergunta ${questionIndex + 1} de ${ totalQuestions }` }</h1>
             </Widget.Header>
@@ -28,9 +29,8 @@ function QuestionWidget({ questionIndex, totalQuestions, question }) {
             <Widget.Content>                        
                 <h2>{ question.title }</h2>
                 <p>{ question.description }</p>
-            </Widget.Content>
-
-            <Button>Olá</Button>
+                <Button>CONFIRMAR</Button>
+            </Widget.Content>            
 
         </Widget>
     )
