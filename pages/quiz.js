@@ -60,7 +60,7 @@ function Quiz() {
                                 question={ questions[questionIndex] }
                                 onSubmit={ handleSubmitQuiz }
                             />
-                        ) }                       
+                        ) }
 
                         { screenState === scrState.RESULT && (
                             <div>oaloalaoao</div>
