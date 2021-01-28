@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import db from '../db.json';
@@ -6,42 +6,38 @@ import Widget from '../components/Widget';
 import QuizLogo from '../components/QuizLogo';
 import QuizContainer from '../components/QuizContainer';
 import QuizBackground from '../components/QuizBackground';
+import QuestionWidget from '../components/QuestionWidget';
 import Footer from '../components/Footer';
 import GitHubCorner from '../components/GitHubCorner';
-import Button from '../components/Button';
+//import Button from '../components/Button';
 
-// import { Container } from './styles';
-
-function QuestionWidget({ questionIndex, totalQuestions, question }) {
-    return (
-        <Widget>
-            
-            <Widget.Header>
-                <h1>{ `Pergunta ${questionIndex + 1} de ${ totalQuestions }` }</h1>
-            </Widget.Header>
-
-            <img 
-                alt="descricao" 
-                style={{ width: '100%', height: '150px', objectFit: 'cover' }} 
-                src={question.image}
-            />
-
-            <Widget.Content>                        
-                <h2>{ question.title }</h2>
-                <p>{ question.description }</p>
-                <Button>CONFIRMAR</Button>
-            </Widget.Content>            
-
-        </Widget>
-    )
+const scrState = {
+    QUIZ: 'QUIZ',
+    LOADING: 'LOADING',
+    RESULT: 'RESULT'
 }
-
 
 function Quiz() {
 
+    const [ screenState, setScreenState ] = useState(scrState.LOADING)
     const [ questionIndex, setQuestionIndex ] = useState(0);
-    const [ totalQuestions, setTotalQuestions ] = useState(2);
+    const [ totalQuestions, setTotalQuestions ] = useState(db.questions.length);
     const [ questions, setQuestions ] = useState(db.questions);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setScreenState(scrState.QUIZ)
+        }, 1000);
+    },[])
+
+    function handleSubmitQuiz() {
+        const nextQuestion = questionIndex + 1;
+        if (nextQuestion < totalQuestions) {
+            setQuestionIndex(questionIndex + 1);
+        } else {
+            setScreenState(scrState.RESULT);
+        }        
+    }
 
     return (
         <QuizBackground backgroundImage={db.bg}>
@@ -50,19 +46,36 @@ function Quiz() {
                 
                 <QuizLogo />
 
-                <QuestionWidget 
-                    questionIndex={ questionIndex }
-                    totalQuestions={ totalQuestions }
-                    question={ questions[0] }
-                />
+                { screenState === scrState.LOADING ? (
+                    
+                    <div>Loading</div>
 
-                <Footer />
+                ) : (
+                    
+                    <React.Fragment>
+
+                        { screenState === scrState.QUIZ && (
+                            <QuestionWidget                     
+                                questionIndex={ questionIndex }
+                                totalQuestions={ totalQuestions }
+                                question={ questions[questionIndex] }
+                                onSubmit={ handleSubmitQuiz }
+                            />
+                        ) }                       
+
+                        { screenState === scrState.RESULT && (
+                            <div>oaloalaoao</div>
+                        )}
+
+                        <Footer />
+
+                    </React.Fragment>
+
+                )}               
 
             </QuizContainer>
 
-            <GitHubCorner 
-                projectUrl="https://github.com/omariosouto" 
-            />
+            <GitHubCorner projectUrl="https://github.com/omariosouto" />
 
         </QuizBackground>
     );
