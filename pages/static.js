@@ -2,28 +2,15 @@ import React, { useState, useEffect } from 'react';
 
 export default function Static(props) {
 
-    /*
-    const [ dados, setDados ] = useState({});
-
-    useEffect(() => {
-
-        console.log(props);
-
-        fetch('https://api.github.com/users/pehdsa')
-        .then((resp) => resp.json() )
-        .then((respConvertida) => { setDados(respConvertida); })
-
-    },[]);
-    */
-
     useEffect(() => {
         console.log(props);
     },[]);
 
     return (
         <div style={{ color: '#000' }}>            
-            <h1>{ props.dadosDoGitHub.name }</h1>
+            <h1>{ props.dadosDoGitHub.name }</h1>            
             <h2>{ props.dadosDoGitHub.login }</h2>
+            <div>ola</div>
         </div>
     );
 }
@@ -35,13 +22,12 @@ export async function getStaticProps() {
 
     try {
 
-        const res = await fetch(`https://api.github.com/users/pehdsa`)
-        const data = await res.json()
+        const res = await fetch(`https://api.github.com/users/pehdsa`);
+        const data = await res.json();
 
-        // VAI RETORNAR OS DADOS PARA O COMPONENTE EXPORT DEFAULT "STATIC"
+        // VAI RETORNAR OS DADOS PARA O COMPONENTE EXPORT DEFAULT "STATIC" COMO "props"
         return {
-            props: {
-                dadoViaServer: "Dado simples vindo do static props",
+            props: {                
                 dadosDoGitHub: data
             }
         }
