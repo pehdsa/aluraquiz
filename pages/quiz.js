@@ -16,16 +16,45 @@ const scrState = {
     RESULT: 'RESULT'
 }
 
+function ResultWidget({ results }) {
+
+    const countRights = results.filter(item => item).length;
+
+    return (
+        <Widget>
+            
+            <Widget.Header>
+                Tela de Resultado
+            </Widget.Header>
+
+            <Widget.Content>                        
+                <p>Você acertou { countRights } {`quest${ countRights > 1 ? 'ões' : 'ão' }`}</p>
+                <ul>
+                    { results.map((item, index) => {
+                        return (
+                            <li key={ index }>#{ index + 1 } Resultado: { item ? 'Certo' : 'Errado'  }</li>
+                        )
+                    }) }
+                    
+                </ul>
+            </Widget.Content>            
+
+        </Widget>
+    )
+}
+
 function Quiz() {
 
-    const [ screenState, setScreenState ] = useState(scrState.LOADING)
+    const [ screenState, setScreenState ] = useState(scrState.LOADING);
+    const [ results, setResults ] = useState([ true, false, true ]);
+
     const [ questionIndex, setQuestionIndex ] = useState(0);
     const [ totalQuestions, setTotalQuestions ] = useState(db.questions.length);
     const [ questions, setQuestions ] = useState(db.questions);
 
     useEffect(() => {
         setTimeout(() => {
-            setScreenState(scrState.QUIZ)
+            setScreenState(scrState.RESULT)
         }, 1000);
     },[])
 
@@ -63,7 +92,7 @@ function Quiz() {
                         ) }
 
                         { screenState === scrState.RESULT && (
-                            <div>oaloalaoao</div>
+                            <ResultWidget results={ results } />
                         )}
 
                         <Footer />
